@@ -18,7 +18,10 @@ PROXY = {'proxy_url': settings.PROXY_URL,
 
 def greet_user(update, context):
     print("Вызван /start")
-    update.message.reply_text('Привет, пользователь! Ты вызвал команду /start')
+    update.message.reply_text('Привет, пользователь! Ты вызвал команду \n /start \
+ \n /planet Planet - узнать созвездие планеты \
+ \n /wordcount ''Ващ текст'' - узнать количество слов в тексте \
+ \n /next_full_moon - узнать дату следующей полной луны')
 
 # def talk_to_me(update, context):
 #     user_text = update.message.text
