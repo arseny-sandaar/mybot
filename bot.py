@@ -39,7 +39,30 @@ def planet_position(update,context):
     #     update.message.reply_text(f"{planet_name} on {today}: {constellation}")
     # else:
     #     update.message.reply_text("Вызовите команду: /planet Planet")
-    
+
+def deEmojify(inputString):
+    return inputString.encode('ascii', 'ignore').decode('ascii')
+
+def word_count(update,context):
+
+    user_text = deEmojify(update.message.text).split()[1:]
+    if len(user_text) == 1:
+        update.message.reply_text(f'В предложении {len(user_text)} слово')
+    elif str(len(user_text))[:-1] == '1' and len(user_text) > 20:
+        update.message.reply_text(f'В предложении {len(user_text)} слово')
+    elif len(user_text) <= 4:
+        update.message.reply_text(f'В предложении {len(user_text)} слова')
+    elif int(str(len(user_text))[:-1]) <= 4 and len(user_text) > 20:
+        update.message.reply_text(f'В предложении {len(user_text)} словa')
+    elif len(user_text) == 0 or user_text == '':
+        update.message.reply_text(f'В предложении нет слов. Введите после /start ВАШЕ ПРЕДЛОЖЕНИЕ.')
+    else:
+        update.message.reply_text(f'В предложении {len(user_text)} слов')
+
+def next_full_moon(update,context):
+    today = date.today().strftime("%Y-%m-%d")
+    date_next_full_moon = ephem.next_full_moon(today)
+    update.message.reply_text(f'Следующая полная луна {date_next_full_moon}')
 
 def my_main():
     mybot = Updater(settings.API_KEY, use_context = True, request_kwargs=PROXY)
@@ -48,6 +71,8 @@ def my_main():
     dp.add_handler(CommandHandler("start",greet_user))
     # dp.add_handler(MessageHandler(Filters.text, talk_to_me))
     dp.add_handler(CommandHandler("planet",planet_position))
+    dp.add_handler(CommandHandler("wordcount",word_count))
+    dp.add_handler(CommandHandler("next_full_moon",next_full_moon))
 
     logging.info("Bot has started")
     mybot.start_polling()
