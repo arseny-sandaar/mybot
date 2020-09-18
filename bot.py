@@ -48,7 +48,7 @@ def deEmojify(inputString):
 
 def word_count(update,context):
 
-    user_text = deEmojify(update.message.text).split()[1:]
+    user_text = update.message.text.split()[1:]
     if len(user_text) == 1:
         update.message.reply_text(f'В предложении {len(user_text)} слово')
     elif str(len(user_text))[:-1] == '1' and len(user_text) > 20:
